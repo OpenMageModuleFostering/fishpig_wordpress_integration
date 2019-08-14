@@ -54,6 +54,10 @@ class Fishpig_Wordpress_IndexController extends Fishpig_Wordpress_Controller_Abs
 			}
 		}
 		
+		if ($this->_isPreview()) {
+			return $this->_forward('view', 'post');
+		}
+		
 		$this->_addCustomLayoutHandles(array(
 			'wordpress_post_list',
 			'wordpress_homepage',
@@ -62,6 +66,24 @@ class Fishpig_Wordpress_IndexController extends Fishpig_Wordpress_Controller_Abs
 
 		$this->_initLayout();
 		$this->renderLayout();
+	}
+	
+	/**
+	 * Homepage is preview
+	 *
+	 * @return bool
+	**/
+	protected function _isPreview()
+	{
+		$keys = array('page_id', 'preview');
+		
+		foreach($keys as $key) {
+			if ($this->getRequest()->getParam($key)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -152,5 +174,28 @@ class Fishpig_Wordpress_IndexController extends Fishpig_Wordpress_Controller_Abs
 	protected function _redirectTo($url)
 	{
 		return $this->getResponse()->setRedirect($url)->sendResponse();
+	}
+
+	/**
+	 *
+	 */
+	public function wpjsonAction()
+	{
+		try {
+			$coreModules = (array)Mage::app()->getConfig()->getNode('wordpress/core/modules');
+			
+			if (!$coreModules) {
+				throw new Exception('No WP Core modules installed.');
+			}
+			
+			$coreModule = array_shift(array_keys($coreModules));
+
+			Mage::helper($coreModule . '/core')->isActive();
+
+			exit;
+		}
+		catch (Exception $e) {
+			return $this->_forward('noRoute');
+		}
 	}
 }

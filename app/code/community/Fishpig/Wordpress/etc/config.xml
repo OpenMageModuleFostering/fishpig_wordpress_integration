@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <config>
     <modules>
-        <Fishpig_Wordpress>
-            <version>4.2.1.9</version>
-        </Fishpig_Wordpress>
+      <Fishpig_Wordpress>
+        <version>4.2.2.9</version>
+      </Fishpig_Wordpress>
     </modules>
     <global>
 		<events>
-            <controller_front_init_before>
-                <observers>
+      <controller_front_init_before>
+        <observers>
 					<wordpress>
 						<type>singleton</type>
 						<class>Fishpig_Wordpress_Controller_Router</class>
 						<method>initControllerBeforeObserver</method>
 					</wordpress>
-                </observers>
-            </controller_front_init_before>
+         </observers>
+       </controller_front_init_before>
             <controller_front_init_routers>
                 <observers>
 					<wordpress>
@@ -41,6 +41,11 @@
 			</wordpress>
 		</blocks>
 		<models>
+			<core>
+				<rewrite>
+					<translate>Fishpig_Wordpress_Model_Translate</translate>
+				</rewrite>
+			</core>
 			<wordpress>
 				<class>Fishpig_Wordpress_Model</class>
 				<resourceModel>wordpress_resource</resourceModel>
@@ -59,6 +64,7 @@
 					<post_category><table>terms</table></post_category>
 					<post_tag><table>terms</table></post_tag>
 					<term><table>terms</table></term>
+					<term_meta><table>termmeta</table></term_meta>
 					<term_relationship><table>term_relationships</table></term_relationship>
 					<term_taxonomy><table>term_taxonomy</table></term_taxonomy>
 					<option><table>options</table></option>
@@ -265,6 +271,7 @@
 					<post_tag><table>terms</table></post_tag>
 					<option><table>options</table></option>
 					<term><table>terms</table></term>
+					<term_meta><table>termmeta</table></term_meta>
 					<term_relationship><table>term_relationships</table></term_relationship>
 					<term_taxonomy><table>term_taxonomy</table></term_taxonomy>
 					<menu><table>terms</table></menu>

@@ -16,6 +16,14 @@ class Fishpig_Wordpress_Model_Term extends Fishpig_Wordpress_Model_Abstract
 	protected $_eventPrefix = 'wordpress_term';
 	protected $_eventObject = 'term';
 	
+	/**
+	 * Entity meta infromation
+	 *
+	 * @var string
+	 */
+	protected $_metaTable = 'wordpress/term_meta';	
+	protected $_metaTableObjectField = 'term_id';
+	
 	public function _construct()
 	{
 		$this->_init('wordpress/term');
@@ -203,6 +211,10 @@ class Fishpig_Wordpress_Model_Term extends Fishpig_Wordpress_Model_Abstract
 	 **/
 	public function getMetaValue($key)
 	{
+		if ($value = parent::getMetaValue($key)) {
+			return $value;
+		}
+
 		$ikey = '__acf_meta_' . $key;
 		
 		if ($this->hasData($ikey)) {

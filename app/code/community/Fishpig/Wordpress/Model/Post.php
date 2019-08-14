@@ -577,7 +577,7 @@ class Fishpig_Wordpress_Model_Post extends Fishpig_Wordpress_Model_Abstract
 					$this->_urlEncode($this->_getData('permalink'))
 				));
 			}
-			else if ($this->getTypeInstance()->isHierarchical()) {
+			else if ($this->getTypeInstance() && $this->getTypeInstance()->isHierarchical()) {
 				if ($uris = $this->getTypeInstance()->getAllRoutes()) {
 					if (isset($uris[$this->getId()])) {
 						$this->setUrl(Mage::helper('wordpress')->getUrl($uris[$this->getId()] . '/'));

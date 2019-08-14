@@ -5,6 +5,30 @@
  * @author Ben Tideswell <ben@fishpig.co.uk>
  */
 
+21/07/2017 = 4.2.2.7
+- Added support for SVG images.
+
+26/06/2017 = 4.2.2.4
+- Added better support for new term meta table in WordPress.
+
+17/06/2017 = 4.2.2.2
+- Fixed object translation issue.
+
+??/05/2017 = 4.2.1.16
+- Added translation rewrite to fix translation issues when using bbPress and other add-on extensions.
+
+13/05/2017 = 4.2.1.15
+- Added better support for TwitterCard and Facebook OpenGraph data in WordPress SEO by Yoast.
+
+12/05/2017 = 4.2.1.14
+- Added setPageSize method to Post/List.php. This allows you to set a custom number of posts per page. This can be called via XML and targeted to specific categories, post types or any kind of archive page.
+
+24/03/2017 - 4.2.1.12
+- Fixed issue with search system when search contained malformed characters
+
+16/03/2017 - 4.2.1.10
+- Fixed XML sitemap issue when using Legacy
+
 08/03/2017 - 4.2.1.9
 - Added missing file. This fixes issue with wpautop not functioning correctly.
 

@@ -313,13 +313,24 @@ class Fishpig_Wordpress_Addon_WordPressSEO_Helper_Data extends Fishpig_Wordpress
 		}
 		
 		if ($this->getTwitter()) {
-			$this->_addTwitterCard(array(
+			$twitterData = array(
 				'card' => $this->getTwitterCardType(),
 				'site' => ($this->getTwitterSite() ? '@' . $this->getTwitterSite() : ''),
-				'title' => $object->getPostTitle(),
 				'creator' => ($creator = $object->getAuthor()->getMetaValue('twitter')) ? '@' . $creator : '',
-				'image0' => $object->getFeaturedImage() ? $object->getFeaturedImage()->getFullSizeImage() : null,
-			));
+				'title' => $object->getMetaValue('_yoast_wpseo_twitter-title'),
+				'description' => $object->getMetaValue('_yoast_wpseo_twitter-description'),
+				'image' => $object->getMetaValue('_yoast_wpseo_twitter-image'),
+			);
+
+			if (!$twitterData['title']) {
+				$twitterData['title'] = $object->getPostTitle();
+			}
+			
+			if (!$twitterData['image']) {
+				$twitterData['image'] = $object->getFeaturedImage() ? $object->getFeaturedImage()->getFullSizeImage() : null;
+			}
+
+			$this->_addTwitterCard($twitterData);
 		}
 		
 		return $this;
@@ -571,17 +582,20 @@ class Fishpig_Wordpress_Addon_WordPressSEO_Helper_Data extends Fishpig_Wordpress
 			'article:modified_time' => $object->getPostModifiedDate('c'),
 		);
 
-		if (!$tags['description']) {
+		if ($fbTitle = $object->getMetaValue('_yoast_wpseo_opengraph-title')) {
+			$tags['title'] = $fbTitle;
+		}
+		
+		if ($fbDesc = $object->getMetaValue('_yoast_wpseo_opengraph-description')) {
+			$tags['description'] = $fbDesc;
+		}
+		else if (!$tags['description']) {
 			if ($head = Mage::getSingleton('core/layout')->getBlock('head')) {
 				$tags['description'] = $head->getDescription();
 			}
-			
-			if ($fbDesc = $object->getMetaValue('_yoast_wpseo_opengraph-description')) {
-				$tags['description'] = $fbDesc;
-			}
 		}
 		
-		if (!$tags['image'] && ($fbImage = $object->getMetaValue('_yoast_wpseo_opengraph-image'))) {
+		if ($fbImage = $object->getMetaValue('_yoast_wpseo_opengraph-image')) {
 			$tags['image'] = $fbImage;
 		}
 
