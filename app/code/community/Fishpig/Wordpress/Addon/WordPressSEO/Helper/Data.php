@@ -298,6 +298,10 @@ class Fishpig_Wordpress_Addon_WordPressSEO_Helper_Data extends Fishpig_Wordpress
 			$meta->setRobots(implode(',', $robots));
 		}
 
+		if (!$meta->getDescription()) {
+			$meta->setDescription($object->getMetaDescription());
+		}
+		
 		$this->_applyMeta($meta->getData());
 
 		if ($canon = $object->getMetaValue('_yoast_wpseo_canonical')) {
@@ -567,15 +571,17 @@ class Fishpig_Wordpress_Addon_WordPressSEO_Helper_Data extends Fishpig_Wordpress
 			'article:modified_time' => $object->getPostModifiedDate('c'),
 		);
 
-		if ($head = Mage::getSingleton('core/layout')->getBlock('head')) {
-			$tags['description'] = $head->getDescription();
+		if (!$tags['description']) {
+			if ($head = Mage::getSingleton('core/layout')->getBlock('head')) {
+				$tags['description'] = $head->getDescription();
+			}
+			
+			if ($fbDesc = $object->getMetaValue('_yoast_wpseo_opengraph-description')) {
+				$tags['description'] = $fbDesc;
+			}
 		}
 		
-		if ($fbDesc = $object->getMetaValue('_yoast_wpseo_opengraph-description')) {
-			$tags['description'] = $fbDesc;
-		}
-		
-		if ($fbImage = $object->getMetaValue('_yoast_wpseo_opengraph-image')) {
+		if (!$tags['image'] && ($fbImage = $object->getMetaValue('_yoast_wpseo_opengraph-image'))) {
 			$tags['image'] = $fbImage;
 		}
 
@@ -797,5 +803,17 @@ class Fishpig_Wordpress_Addon_WordPressSEO_Helper_Data extends Fishpig_Wordpress
 		}
 		
 		return $this;
+	}
+
+	/**
+	 * Ensure post types are correctly converted
+	 *
+	 * @param string $key
+	 * @param string $index
+	 * @return mixed
+	**/
+	public function getData($key='', $index=null)
+	{
+		return parent::getData(str_replace('-', '_', $key), $index);
 	}
 }

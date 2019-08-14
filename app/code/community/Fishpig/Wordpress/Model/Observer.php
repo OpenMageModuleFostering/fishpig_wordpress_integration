@@ -144,7 +144,7 @@ class Fishpig_Wordpress_Model_Observer extends Varien_Object
 			if (isset($initialEnvironmentInfo)) {
 				$appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
 			}
-			
+
 			Mage::helper('wordpress')->log($e);
 		}
 
