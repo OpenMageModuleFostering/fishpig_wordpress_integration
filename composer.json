@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/Fishpig_Wordpress_Integration",
+    "name": "OpenMageModuleFostering\/Fishpig_Wordpress_Integration",
     "type": "magento-module",
     "license": "FishPig-EULA",
     "homepage": "",
     "description": "WordPress blog integration",
     "authors": [
-    {
-        "name": "fishpig",
-        "email": "ben@fishpig.co.uk"
-    }
-],
+        {
+            "name": "fishpig",
+            "email": "ben@fishpig.co.uk"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
