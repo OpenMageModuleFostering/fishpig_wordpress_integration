@@ -1,5 +1,5 @@
 {
-    "name": "OpenMageModuleFostering\/Fishpig_Wordpress_Integration",
+    "name": "openmage-module-fostering\/fishpig_wordpress_integration",
     "type": "magento-module",
     "license": "FishPig-EULA",
     "homepage": "",
